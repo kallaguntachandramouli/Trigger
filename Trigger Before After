@@ -9,7 +9,9 @@ This is often used for data validation,modification, or cleansing before the dat
 This is commonly used for auditing,logging changes, or performing actions on other tables based on the changes in the triggered table.
 
 1.Before Trigger:
-
+SHOW DATABASES;
+USE PRACTICES;
+SHOW TABLES;
 CREATE TRIGGER ValidateCheckInTime
 BEFORE INSERT ON Employee_Attendance
 FOR EACH ROW
@@ -21,7 +23,9 @@ END;
 
 
 2.After Trigger:
-
+SHOW DATABASES;
+USE PRACTICES;
+SHOW TABLES;
 CREATE TRIGGER LogCheckOutUpdate
 AFTER UPDATE ON Employee_Attendance
 FOR EACH ROW
