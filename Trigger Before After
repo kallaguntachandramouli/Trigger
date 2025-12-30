@@ -1,0 +1,33 @@
+Triggers:
+is a  stored program invoked automatically in response to an event such as insert, update, or delete that occurs in the associated table.
+
+*Triggers action time :
+
+1.BEFORE: The trigger executes before the triggering event occurs. 
+This is often used for data validation,modification, or cleansing before the data is actually inserted, updated, or deleted.
+2.AFTER: The trigger executes after the triggering event has completed. 
+This is commonly used for auditing,logging changes, or performing actions on other tables based on the changes in the triggered table.
+
+1.Before Trigger:
+
+CREATE TRIGGER ValidateCheckInTime
+BEFORE INSERT ON Employee_Attendance
+FOR EACH ROW
+BEGIN
+  IF TIME(NEW.CheckIn) > '10:00:00' THEN
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Check-in after 10 AM not allowed';
+  END IF;
+END;
+
+
+2.After Trigger:
+
+CREATE TRIGGER LogCheckOutUpdate
+AFTER UPDATE ON Employee_Attendance
+FOR EACH ROW
+BEGIN
+  IF NEW.CheckOut IS NOT NULL AND OLD.CheckOut IS NULL THEN
+    INSERT INTO AttendanceLogs (EmployeeID, Action, Time)
+    VALUES (NEW.EmployeeID, 'Checked Out', NOW());
+  END IF;
+END;
